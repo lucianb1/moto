@@ -1,37 +1,14 @@
 server:
   port: 8080
-  context-path: /styllink
+  context-path: /motorzz
 
-resources:
-  images:
-    location:
-#      root: E:/images
-#      root: /home/svtech/styllink_resources/images
-      root: /home/ubuntu/styllink_resources/images
-      providers : /providers
-      demands: /demands
-      reports: /reports
-      parentCategories: /parent_categories
-      users: /users
-      chat: /chat
-    url:
-      providers: /images/providers
-      users: /images/users
-      demands: /images/demands
-      chat: /images/chat
-      reports: /images/reports
-      parentCategories: /images/parent_categories
-demands:
-    daysToLive: 2
 params:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/styllink?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    jdbcUrl: jdbc:mysql://localhost:3306/motorzz?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     connectionTimeout: 600000
     username: root
-#    password: pastrav97
-#    password: letmein
-    password: st1_server
+    password: pastrav97
     maximumPoolSize: 15
     initialize: true
 
@@ -66,14 +43,4 @@ spring:
 spring.thymeleaf.cache: false
 
 properties:
-  baseUrl: https://styllink.servus.tech/
-
-#  location: /opt/tomcat/logs
-#logging:
-#  file: /opt/tomcat/logs/styllink.log
-#  file: ${TOMCAT_HOME}/logs/styllink.log
-#  file: ${catalina.home}/logs/styllink.log
-#  file: ../logs/styllink.log
-#  path: ../logs/
-#  level:
-#    springfox.documentation: ERROR
+  baseUrl: http://motorzz.ro/

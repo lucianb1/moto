@@ -1,0 +1,75 @@
+package ro.motorzz.security;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.filter.GenericFilterBean;
+import ro.motorzz.service.api.AuthenticationService;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * @author Ovidiu Barz
+ */
+public class TokenFilter extends GenericFilterBean {// GenericFilterBean // AbstractAuthenticationProcessingFilter
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenFilter.class);
+
+    private final AuthenticationProvider authenticationProvider;
+    private final AuthenticationEntryPoint entryPoint;
+    private final AuthenticationService authenticationService;
+
+
+    @Autowired
+    public TokenFilter(AuthenticationProvider authenticationProvider, AuthenticationEntryPoint entryPoint, AuthenticationService authenticationService) {
+        this.authenticationProvider = authenticationProvider;
+        this.entryPoint = entryPoint;
+        this.authenticationService = authenticationService;
+    }
+
+    private void doTokenFilter(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws IOException, ServletException {
+        String token = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        try {
+            if (StringUtils.isBlank(token)) {
+                LOGGER.warn("No token provided for method: {}, URL: {}, from IP: {}, port: {}", httpServletRequest.getMethod(),
+                        httpServletRequest.getRequestURI(), httpServletRequest.getRemoteHost(), httpServletRequest.getRemotePort());
+                //throw new AuthenticationServiceException("No token provided");
+                filterChain.doFilter(httpServletRequest, httpServletResponse);
+                return;
+            }
+            LOGGER.trace("Token provided: {}, from IP address {}", token, httpServletRequest.getRemoteAddr());
+
+//            PrincipalUser principalUser = authenticationService.authenticateByToken(token); //TODO
+            PrincipalUser principalUser = null;
+            TokenAuthentication authentication = new TokenAuthentication();
+            authentication.setToken(token);
+            authentication.setPrincipal(principalUser);
+            authentication.setAuthenticated(true);
+            Authentication auth = this.authenticationProvider.authenticate(authentication);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        } catch (AuthenticationException e) {
+            SecurityContextHolder.clearContext();
+            this.entryPoint.commence(httpServletRequest, httpServletResponse, e);
+        }
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest servletRequest = (HttpServletRequest) request;
+        HttpServletResponse servletResponse = (HttpServletResponse) response;
+        doTokenFilter(servletRequest, servletResponse, chain);
+    }
+}

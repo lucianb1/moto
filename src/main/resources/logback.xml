@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="FILE_LOCATION" value="/home/ubuntu"/>
-    <!--<property name="FILE_LOCATION" value="/opt/tomcat/logs" />-->
-    <!--<property name="FILE_LOCATION" value="../" />-->
+    <property name="FILE_LOCATION" value="../" />
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
@@ -13,7 +11,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${FILE_LOCATION}/styllink.log/</file>
+        <file>${FILE_LOCATION}/motorzz.log/</file>
         <append>true</append>
         <encoder>
             <pattern>
