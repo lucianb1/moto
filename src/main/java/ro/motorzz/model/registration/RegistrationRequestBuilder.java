@@ -1,5 +1,7 @@
 package ro.motorzz.model.registration;
 
+import java.util.Objects;
+
 /**
  * Created by Luci on 22-Jun-17.
  */
@@ -9,6 +11,8 @@ public class RegistrationRequestBuilder {
     private String password;
 
     public RegistrationRequestImpl build() {
+        Objects.requireNonNull(email);
+        Objects.requireNonNull(password);
         return new RegistrationRequestImpl(email, password);
     }
 

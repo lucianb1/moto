@@ -25,7 +25,8 @@ public class EdgeServer {
     private String tokenHeader = "Authorization";
 
     public EdgeServer(WebApplicationContext context, Filter securityFilterChain) {
-        this.mockMvc = ((DefaultMockMvcBuilder) MockMvcBuilders.webAppContextSetup(context).addFilter(securityFilterChain, new String[0])).build();
+        this.mockMvc = ((DefaultMockMvcBuilder) MockMvcBuilders.webAppContextSetup(context)
+                .addFilter(securityFilterChain)).build();
     }
 
     public <T> EdgeServerResponse<T> executeRequest(EdgeServerRequest request, Class<T> responseType) {
@@ -45,15 +46,15 @@ public class EdgeServer {
         }
     }
 
-    public <T> EdgeServerResponse<T> executeRequest(EdgeServerRequest request, JavaType responseType) {
+    public <T> EdgeServerResponse<T> executeRequest(EdgeServerRequest request, JavaType javaResponseType) {
         MockHttpServletRequestBuilder mockRequest = this.composeMockRequest(request);
 
         try {
             MvcResult mvcResult = this.mockMvc.perform(mockRequest).andReturn();
             MockHttpServletResponse response = mvcResult.getResponse();
             T result = null;
-            if (response.getStatus() == HttpStatus.OK.value() && StringUtils.isNotBlank(response.getContentAsString()) && responseType != null) {
-                result = jsonUtils.fromJson(response.getContentAsString(), responseType);
+            if (response.getStatus() == HttpStatus.OK.value() && StringUtils.isNotBlank(response.getContentAsString()) && javaResponseType != null) {
+                result = jsonUtils.fromJson(response.getContentAsString(), javaResponseType);
             }
 
             return new EdgeServerResponse(response.getStatus(), result);

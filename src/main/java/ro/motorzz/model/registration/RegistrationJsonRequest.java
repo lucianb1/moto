@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import ro.motorzz.core.validation.ValidPassword;
 
-public class RegistrationJsonRequest implements RegistrationRequest{
+public class RegistrationJsonRequest implements RegistrationRequest {
 
     @Email
     @NotBlank
