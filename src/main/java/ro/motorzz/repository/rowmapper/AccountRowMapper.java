@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class AccountRowMapper implements RowMapper<Account> {
 
     @Override
-    public Account mapRow(ResultSet rs, int i) throws SQLException {
+    public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new AccountBuilder()
                 .setId(rs.getInt("id"))
                 .setStatus(AccountStatus.valueFromString(rs.getString("status")))

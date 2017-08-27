@@ -11,7 +11,7 @@ public class AccountBuilder {
     private AccountStatus status;
     private Integer loginTimes;
 
-    public Account build(){
+    public Account build() {
         Objects.requireNonNull(id);
         Objects.requireNonNull(email);
         Objects.requireNonNull(password);

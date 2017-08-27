@@ -15,7 +15,6 @@ import ro.motorzz.service.api.AccountService;
 public class AccountServiceImpl implements AccountService{
 
     private final AccountRepository accountRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     public AccountServiceImpl(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {

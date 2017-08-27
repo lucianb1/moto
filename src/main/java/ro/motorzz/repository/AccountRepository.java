@@ -1,5 +1,7 @@
 package ro.motorzz.repository;
 
+
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -13,7 +15,6 @@ import ro.motorzz.model.account.AccountType;
 import ro.motorzz.repository.rowmapper.AccountRowMapper;
 
 import java.util.List;
-import java.util.Objects;
 
 @Repository
 public class AccountRepository extends BaseRepository {
@@ -38,11 +39,11 @@ public class AccountRepository extends BaseRepository {
                 .select().append("*").from("accounts")
                 .where().equal("id", "?", id);
         SQLQuery query = queryBuilder.build();
-        Account account = jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), accountRowMapper);
-        if (Objects.isNull(account)) {
+        try {
+            return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), accountRowMapper);
+        }catch(EmptyResultDataAccessException e) {
             throw new NotFoundException("User by id not found: " + id);
         }
-        return account;
     }
 
     public Account saveAccount(String email, String password, AccountType type, AccountStatus status) {

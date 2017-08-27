@@ -11,4 +11,5 @@ public class BaseRepository {
 
     @Autowired
     protected NamedParameterJdbcTemplate namedJdbcTemplate;
+
 }

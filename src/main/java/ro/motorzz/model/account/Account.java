@@ -1,5 +1,7 @@
 package ro.motorzz.model.account;
 
+import javax.annotation.Nonnull;
+
 public class Account {
 
     private final int id;
@@ -22,6 +24,7 @@ public class Account {
         return id;
     }
 
+    @Nonnull
     public String getEmail() {
         return email;
     }
@@ -30,15 +33,22 @@ public class Account {
         return password;
     }
 
+    @Nonnull
     public AccountType getType() {
         return type;
     }
 
+    @Nonnull
     public AccountStatus getStatus() {
         return status;
+    }
+
+    public boolean isActive() {
+        return AccountStatus.ACTIVE.equals(this.getStatus());
     }
 
     public int getLoginTimes() {
         return loginTimes;
     }
+
 }
