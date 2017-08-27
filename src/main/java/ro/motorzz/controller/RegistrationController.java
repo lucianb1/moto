@@ -16,7 +16,7 @@ public class RegistrationController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void registerAccount(@Valid @RequestBody RegistrationJsonRequest request) {
-//        registrationService.register(request);
+        registrationService.register(request);
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)

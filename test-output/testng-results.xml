@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="5347" started-at="2017-08-21T11:05:59Z" finished-at="2017-08-21T11:06:04Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="5347" started-at="2017-08-21T11:05:59Z" finished-at="2017-08-21T11:06:04Z">
+      <class name="ro.motorzz.test.tests.RegistrationTest">
+        <test-method status="PASS" signature="springTestContextPrepareTestInstance()[pri:0, instance:ro.motorzz.test.tests.RegistrationTest@5876a9af]" name="springTestContextPrepareTestInstance" is-config="true" duration-ms="5208" started-at="2017-08-21T14:05:59Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass" finished-at="2017-08-21T14:06:04Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextPrepareTestInstance -->
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()[pri:0, instance:ro.motorzz.test.tests.RegistrationTest@5876a9af]" name="springTestContextBeforeTestClass" is-config="true" duration-ms="0" started-at="2017-08-21T14:05:59Z" finished-at="2017-08-21T14:05:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestClass -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:ro.motorzz.test.tests.RegistrationTest@5876a9af]" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="1" started-at="2017-08-21T14:06:04Z" finished-at="2017-08-21T14:06:04Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void ro.motorzz.test.tests.RegistrationTest.registrationTest()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="registrationTest()[pri:0, instance:ro.motorzz.test.tests.RegistrationTest@5876a9af]" name="registrationTest" duration-ms="126" started-at="2017-08-21T14:06:04Z" finished-at="2017-08-21T14:06:04Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- registrationTest -->
+        <test-method status="PASS" signature="springTestContextAfterTestClass()[pri:0, instance:ro.motorzz.test.tests.RegistrationTest@5876a9af]" name="springTestContextAfterTestClass" is-config="true" duration-ms="0" started-at="2017-08-21T14:06:04Z" finished-at="2017-08-21T14:06:04Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestClass -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:ro.motorzz.test.tests.RegistrationTest@5876a9af]" name="springTestContextAfterTestMethod" is-config="true" duration-ms="0" started-at="2017-08-21T14:06:04Z" finished-at="2017-08-21T14:06:04Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void ro.motorzz.test.tests.RegistrationTest.registrationTest()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+      </class> <!-- ro.motorzz.test.tests.RegistrationTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

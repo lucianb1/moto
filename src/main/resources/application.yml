@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8082
   context-path: /motorzz
 
 params:
@@ -8,7 +8,8 @@ params:
     jdbcUrl: jdbc:mysql://localhost:3306/motorzz?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     connectionTimeout: 600000
     username: root
-    password: pastrav97
+    password: root
+    #password: pastrav97
     maximumPoolSize: 15
     initialize: true
 
@@ -44,3 +45,4 @@ spring.thymeleaf.cache: false
 
 properties:
   baseUrl: http://motorzz.ro/
+  registrationTokenDurationInHours: 8

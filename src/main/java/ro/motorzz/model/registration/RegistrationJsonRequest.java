@@ -24,11 +24,13 @@ public class RegistrationJsonRequest implements RegistrationRequest {
         return password;
     }
 
-    public void setEmail(String email) {
+    public RegistrationJsonRequest setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public void setPassword(String password) {
+    public RegistrationJsonRequest setPassword(String password) {
         this.password = password;
+        return this;
     }
 }
