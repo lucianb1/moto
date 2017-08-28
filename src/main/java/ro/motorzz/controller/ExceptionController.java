@@ -38,7 +38,7 @@ public class ExceptionController {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(Exception ex) {
         LOGGER.error("not found exception ", ex);
-        return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({AuthenticationException.class, PermissionDeniedException.class, AccessDeniedException.class})
@@ -52,6 +52,12 @@ public class ExceptionController {
         LOGGER.error("Internal exception occurred: ", t);
         String responseMessage = String.format("Exception: %s, message: %s", t.getClass().getSimpleName(), t.getMessage());
         return new ResponseEntity<>(toJson(responseMessage), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(PreconditionFailedException.class)
+    public ResponseEntity<String> handlePreconditionFailedException(Exception ex) {
+        LOGGER.error("Precondition failed exception ", ex);
+        return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.PRECONDITION_FAILED);
     }
 
     private String toJson(String message) {

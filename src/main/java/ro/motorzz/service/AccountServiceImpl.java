@@ -24,7 +24,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account registerAccount(RegistrationRequest request) {
-        return accountRepository.saveAccount(request.getEmail(), request.getPassword(), AccountType.USER, AccountStatus.PENDING);
+        return accountRepository.saveAccount(request.getEmail(), this.encodePassword(request.getPassword()), AccountType.USER, AccountStatus.PENDING);
     }
 
     private String encodePassword(String password){

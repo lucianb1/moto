@@ -1,4 +1,4 @@
-package ro.motorzz.test.mock;
+package ro.motorzz.test.edgeserver;
 
 /**
  * Created by Luci on 21-Jun-17.

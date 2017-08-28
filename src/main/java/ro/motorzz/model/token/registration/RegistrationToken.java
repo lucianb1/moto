@@ -1,4 +1,6 @@
-package ro.motorzz.model.token;
+package ro.motorzz.model.token.registration;
+
+import ro.motorzz.model.token.Token;
 
 import java.time.LocalDateTime;
 

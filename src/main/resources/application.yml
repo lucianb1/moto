@@ -46,3 +46,4 @@ spring.thymeleaf.cache: false
 properties:
   baseUrl: http://motorzz.ro/
   registrationTokenDurationInHours: 8
+  authenticationTokenDurationInHours: 8

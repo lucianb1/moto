@@ -1,4 +1,4 @@
-package ro.motorzz.test.mock;
+package ro.motorzz.test.edgeserver;
 
 import com.fasterxml.jackson.databind.JavaType;
 import org.apache.commons.lang3.StringUtils;

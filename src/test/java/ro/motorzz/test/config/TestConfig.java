@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.WebApplicationContext;
-import ro.motorzz.test.mock.EdgeServer;
+import ro.motorzz.test.edgeserver.EdgeServer;
 
 import javax.servlet.Filter;
 

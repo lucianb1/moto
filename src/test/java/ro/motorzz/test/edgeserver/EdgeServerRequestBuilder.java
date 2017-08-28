@@ -1,4 +1,4 @@
-package ro.motorzz.test.mock;
+package ro.motorzz.test.edgeserver;
 
 import java.util.HashMap;
 import java.util.Map;

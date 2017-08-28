@@ -1,4 +1,4 @@
-package ro.motorzz.model.token;
+package ro.motorzz.model.token.registration;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -11,7 +11,7 @@ public class RegistrationTokenBuilder {
 
     public RegistrationToken build(){
         Objects.requireNonNull(token);
-//        Objects.requireNonNull(expiresOn);
+        Objects.requireNonNull(expiresOn);
         Objects.requireNonNull(accountID);
         return new RegistrationToken(token,expiresOn,accountID);
     }

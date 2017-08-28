@@ -28,7 +28,7 @@ public class AccountRepository extends BaseRepository {
                 .equal("email", "?", email);
         SQLQuery query = queryBuilder.build();
         List<String> emails = jdbcTemplate.queryForList(query.getQuery(), query.getParams(), String.class);
-        if(emails.isEmpty()){
+        if (emails.isEmpty()) {
             return true;
         }
         return false;
@@ -41,8 +41,20 @@ public class AccountRepository extends BaseRepository {
         SQLQuery query = queryBuilder.build();
         try {
             return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), accountRowMapper);
-        }catch(EmptyResultDataAccessException e) {
-            throw new NotFoundException("User by id not found: " + id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Account by id not found: " + id);
+        }
+    }
+
+    public Account findAccountByEmail(String email) {
+        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
+                .select().append("*").from("accounts")
+                .where().equal("email", "?", email);
+        SQLQuery query = queryBuilder.build();
+        try {
+            return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), accountRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("Account by email not found: " + email);
         }
     }
 
@@ -65,6 +77,19 @@ public class AccountRepository extends BaseRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedJdbcTemplate.update(queryBuilder.build().getQuery(), params, keyHolder);
         return this.findAccount(keyHolder.getKey().intValue());
+    }
+
+
+    public Account updateStatus(int id, AccountStatus accountStatus) {
+        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
+                .update("accounts")
+                .set()
+                .equal("status", "?", accountStatus.name())
+                .where()
+                .equal("id", "?", id);
+        SQLQuery query = queryBuilder.build();
+        jdbcTemplate.update(query.getQuery(), query.getParams());
+        return this.findAccount(id);
     }
 
 }

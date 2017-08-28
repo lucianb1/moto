@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS registration_tokens (
     account_id INT NOT NULL,
     token VARCHAR(50) NOT NULL,
     expires_on DATETIME, -- maybe not null
-    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE INDEX `registration_token` (`token`)
 )^;
 
 CREATE TABLE IF NOT EXISTS authentication_tokens (
@@ -22,7 +23,8 @@ CREATE TABLE IF NOT EXISTS authentication_tokens (
     account_id INT NOT NULL,
     token VARCHAR(50) NOT NULL,
     expires_on DATETIME, -- maybe not null
-    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	  UNIQUE INDEX `authentication_token` (`token`)
 )^;
 
 DROP FUNCTION IF EXISTS geo_distance^;
