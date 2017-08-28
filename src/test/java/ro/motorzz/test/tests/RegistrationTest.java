@@ -47,7 +47,7 @@ public class RegistrationTest extends BaseTestClass{
 				.setPassword(password)
 				.build();
 		registrationClient.register(registrationRequest);
-		String token = mailServiceMock.getToken(email);
+		String token = mailServiceMock.getRegisterTokenForEmail(email);
 		final EdgeServerResponse<LoginResponseJson> edgeServerResponse = registrationClient.confirmRegistration(token);
 		Account account = accountRepository.findAccountByEmail(email);
 		Assert.assertEquals(account.getEmail(), edgeServerResponse.getContent().getEmail());

@@ -69,10 +69,7 @@ public class RegistrationTokenRepository extends BaseRepository {
                 .where().equal("token", "?", token);
         SQLQuery query = queryBuilder.build();
         List<String> tokens = jdbcTemplate.queryForList(query.getQuery(), query.getParams(), String.class);
-        if (tokens.isEmpty()) {
-            return true;
-        }
-        return false;
+        return tokens.isEmpty();
     }
 
     public void deleteRegistrationToken(String token) {

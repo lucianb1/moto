@@ -18,7 +18,7 @@ public class MailServiceMock  implements MailService{
         confirmationMails.put(emailTo,token);
     }
 
-    public String getToken(String email) {
+    public String getRegisterTokenForEmail(String email) {
         return confirmationMails.get(email);
     }
 }

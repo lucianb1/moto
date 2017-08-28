@@ -28,10 +28,7 @@ public class AccountRepository extends BaseRepository {
                 .equal("email", "?", email);
         SQLQuery query = queryBuilder.build();
         List<String> emails = jdbcTemplate.queryForList(query.getQuery(), query.getParams(), String.class);
-        if (emails.isEmpty()) {
-            return true;
-        }
-        return false;
+        return emails.isEmpty();
     }
 
     public Account findAccount(int id) {
