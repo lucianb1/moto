@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ro.motorzz.service.ConsoleMailService;
+import ro.motorzz.service.api.MailService;
 
 @Configuration
 @EnableScheduling
@@ -27,6 +29,12 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder getPasswordEncoderBean() {
         return new BCryptPasswordEncoder();
+    }
+
+    //change me to use real mails
+    @Bean
+    public MailService getMailServiceBean() {
+        return new ConsoleMailService();
     }
 
 }

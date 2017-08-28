@@ -3,7 +3,6 @@ package ro.motorzz.security;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -20,11 +19,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
-/**
- * @author Ovidiu Barz
- */
-public class TokenFilter extends GenericFilterBean {// GenericFilterBean // AbstractAuthenticationProcessingFilter
+public class TokenFilter extends GenericFilterBean {
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenFilter.class);
 
     private final AuthenticationProvider authenticationProvider;
@@ -32,7 +29,7 @@ public class TokenFilter extends GenericFilterBean {// GenericFilterBean // Abst
     private final AuthenticationService authenticationService;
 
 
-    @Autowired
+//    @Autowired
     public TokenFilter(AuthenticationProvider authenticationProvider, AuthenticationEntryPoint entryPoint, AuthenticationService authenticationService) {
         this.authenticationProvider = authenticationProvider;
         this.entryPoint = entryPoint;
@@ -45,14 +42,12 @@ public class TokenFilter extends GenericFilterBean {// GenericFilterBean // Abst
             if (StringUtils.isBlank(token)) {
                 LOGGER.warn("No token provided for method: {}, URL: {}, from IP: {}, port: {}", httpServletRequest.getMethod(),
                         httpServletRequest.getRequestURI(), httpServletRequest.getRemoteHost(), httpServletRequest.getRemotePort());
-                //throw new AuthenticationServiceException("No token provided");
-                filterChain.doFilter(httpServletRequest, httpServletResponse);
-                return;
+                throw new ro.motorzz.core.exception.AuthenticationException("No token provided");
             }
-            LOGGER.trace("Token provided: {}, from IP address {}", token, httpServletRequest.getRemoteAddr());
+            LOGGER.info("Token provided: {}, from IP address {}", token, httpServletRequest.getRemoteAddr());
 
-//            PrincipalUser principalUser = authenticationService.authenticateByToken(token); //TODO
-            PrincipalUser principalUser = null;
+            //TODO CALL AUTH SERVICE FOR THIS
+            PrincipalUser principalUser = new PrincipalUser("username", "pass", Collections.emptyList());
             TokenAuthentication authentication = new TokenAuthentication();
             authentication.setToken(token);
             authentication.setPrincipal(principalUser);

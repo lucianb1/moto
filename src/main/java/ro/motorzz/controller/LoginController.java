@@ -1,13 +1,11 @@
 package ro.motorzz.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ro.motorzz.model.login.LoginJsonRequest;
 import ro.motorzz.model.login.response.LoginResponseJson;
-import ro.motorzz.security.PrincipalUser;
 import ro.motorzz.security.TokenAuthentication;
 import ro.motorzz.service.api.AuthenticationService;
 
@@ -28,8 +26,8 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public void logout(TokenAuthentication authentication, @AuthenticationPrincipal PrincipalUser principal) {
-        System.out.println(principal);
-        authenticationService.logout(authentication.getToken());
+    public void logout(TokenAuthentication authentication) {
+        System.out.println(authentication.getToken());
+//        authenticationService.logout(authentication.getToken());
     }
 }
