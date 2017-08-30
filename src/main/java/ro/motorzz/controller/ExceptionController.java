@@ -38,7 +38,7 @@ public class ExceptionController {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(Exception ex) {
         LOGGER.error("not found exception ", ex);
-        return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({AuthenticationException.class, PermissionDeniedException.class, AccessDeniedException.class})

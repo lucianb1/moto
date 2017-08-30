@@ -1,6 +1,7 @@
 package ro.motorzz.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,13 +12,16 @@ import ro.motorzz.model.account.Account;
 import ro.motorzz.model.account.AccountStatus;
 import ro.motorzz.model.login.LoginRequest;
 import ro.motorzz.model.login.response.LoginResponseJson;
+import ro.motorzz.model.token.authentication.AuthenticationToken;
 import ro.motorzz.model.token.registration.RegistrationToken;
 import ro.motorzz.repository.AccountRepository;
 import ro.motorzz.repository.AuthenticationTokenRepository;
 import ro.motorzz.repository.RegistrationTokenRepository;
+import ro.motorzz.security.PrincipalUser;
 import ro.motorzz.service.api.AuthenticationService;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 @Service
 @Transactional
@@ -74,11 +78,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationTokenRepository.deleteAuthenticationToken(token);
     }
 
+    @Override
+    public PrincipalUser authenticateByToken(String token) {
+        AuthenticationToken authenticationToken = authenticationTokenRepository.findByToken(token);
+        Account account = accountRepository.findAccount(authenticationToken.getAccoutnID());
+        return mapToPrincipal(account);
+    }
+
     private String generateUniqueToken() {
         String token = TokenUtils.generateToken();
         while (!authenticationTokenRepository.isTokenUnique(token)) {
             token = TokenUtils.generateToken();
         }
         return token;
+    }
+    private PrincipalUser mapToPrincipal(Account account) {
+        PrincipalUser principalUser = new PrincipalUser(account.getEmail(), "", Collections.singletonList(new SimpleGrantedAuthority(account.getType().name())));
+        principalUser.setId(account.getId());
+        principalUser.setAccountType(account.getType());
+//        principalUser.setFirstLogin(account.getLoginTimes() == 0);
+        return principalUser;
     }
 }

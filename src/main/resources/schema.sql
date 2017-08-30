@@ -27,6 +27,26 @@ CREATE TABLE IF NOT EXISTS authentication_tokens (
 	  UNIQUE INDEX `authentication_token` (`token`)
 )^;
 
+CREATE TABLE IF NOT EXISTS adverts (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	category SMALLINT(6) NOT NULL,
+	maker SMALLINT(6) NOT NULL,
+	first_register SMALLINT(6) NOT NULL,
+	price MEDIUMINT(9) NOT NULL,
+	power_cp TINYINT(3) UNSIGNED NOT NULL,
+	power_kW TINYINT(4) NOT NULL,
+	kilometer MEDIUMINT(9) NOT NULL,
+	fuel_type SMALLINT(6) NOT NULL,
+	driving_mode SMALLINT(6) NOT NULL,
+	transmission SMALLINT(6) NOT NULL,
+	cubic_capacity SMALLINT(6) NOT NULL,
+	colour SMALLINT(6) NOT NULL,
+	feature SMALLINT(6) NOT NULL,
+	tva BIT(1) NOT NULL,
+	vendor SMALLINT(6) NOT NULL,
+	PRIMARY KEY (id)
+)^;
+
 DROP FUNCTION IF EXISTS geo_distance^;
 CREATE FUNCTION geo_distance(
         lat1 FLOAT, lon1 FLOAT,

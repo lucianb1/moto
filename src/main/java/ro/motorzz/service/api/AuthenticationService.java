@@ -2,6 +2,7 @@ package ro.motorzz.service.api;
 
 import ro.motorzz.model.login.LoginRequest;
 import ro.motorzz.model.login.response.LoginResponseJson;
+import ro.motorzz.security.PrincipalUser;
 
 public interface AuthenticationService {
 
@@ -10,4 +11,6 @@ public interface AuthenticationService {
     LoginResponseJson confirmRegistration(String token);
 
     void logout(String token);
+
+    PrincipalUser authenticateByToken(String token);
 }

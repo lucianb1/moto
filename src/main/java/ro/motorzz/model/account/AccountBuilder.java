@@ -17,7 +17,7 @@ public class AccountBuilder {
         Objects.requireNonNull(password);
         Objects.requireNonNull(type);
         Objects.requireNonNull(status);
-        Objects.requireNonNull(loginTimes);
+//        Objects.requireNonNull(loginTimes);
         return new Account(id,email,password,type,status,loginTimes);
     }
 
