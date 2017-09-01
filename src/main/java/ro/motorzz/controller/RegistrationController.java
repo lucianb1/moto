@@ -15,6 +15,11 @@ public class RegistrationController {
     @Autowired
     private RegistrationService registrationService;
 
+    /**
+     * 409 - multiple consecutive registration
+     * 412 - account status is not pending
+     * 200 - success
+     */
     @RequestMapping(method = RequestMethod.POST)
     public void registerAccount(@Valid @RequestBody RegistrationJsonRequest request) {
         registrationService.register(request);

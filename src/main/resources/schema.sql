@@ -47,6 +47,17 @@ CREATE TABLE IF NOT EXISTS adverts (
 	PRIMARY KEY (id)
 )^;
 
+CREATE TABLE IF NOT EXISTS reset_password_tokens (
+	id INT(11) NOT NULL AUTO_INCREMENT,
+	account_id INT(11) NOT NULL,
+	password BINARY(60) NOT NULL,
+	token VARCHAR(50) NOT NULL,
+	expires_on DATETIME NULL DEFAULT NULL,
+	created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE INDEX reset_password_token (token)
+)^;
+
 DROP FUNCTION IF EXISTS geo_distance^;
 CREATE FUNCTION geo_distance(
         lat1 FLOAT, lon1 FLOAT,

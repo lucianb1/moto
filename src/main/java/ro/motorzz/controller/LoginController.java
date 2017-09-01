@@ -22,7 +22,7 @@ public class LoginController {
     }
 
     /**
-     * @return 404 - email not found
+     * 404 - email not found
      * 401 - password didn't match
      * 412 - account is not active
      */

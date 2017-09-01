@@ -8,4 +8,9 @@ public class ConsoleMailService implements MailService {
     public void sendRegisterConfirmationEmail(String emailTo, String token) {
         System.out.println(String.format("Registration token for %s = %s", emailTo, token));
     }
+
+    @Override
+    public void sendPasswordConfirmationEmail(String emailTo, String token) {
+
+    }
 }

@@ -47,3 +47,4 @@ properties:
   baseUrl: http://motorzz.ro/
   registrationTokenDurationInHours: 8
   authenticationTokenDurationInHours: 8
+  resetPasswordTokenDurationInHours: 8

@@ -13,4 +13,6 @@ public interface AuthenticationService {
     void logout(String token);
 
     PrincipalUser authenticateByToken(String token);
+
+    LoginResponseJson confirmResetPassword(String token);
 }

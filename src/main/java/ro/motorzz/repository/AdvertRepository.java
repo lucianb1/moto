@@ -4,9 +4,10 @@ import org.springframework.stereotype.Repository;
 import ro.motorzz.core.utils.sql.SQLQuery;
 import ro.motorzz.core.utils.sql.SQLQueryBuilder;
 import ro.motorzz.model.advert.Advert;
+import ro.motorzz.repository.base.BaseRepository;
 
 @Repository
-public class AdvertRepository extends  BaseRepository{
+public class AdvertRepository extends BaseRepository {
 
     public void saveAdvert(Advert advert) {
         SQLQueryBuilder queryBuilder = new SQLQueryBuilder()

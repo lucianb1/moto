@@ -1,5 +1,9 @@
 package ro.motorzz.model.advert;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ro.motorzz.model.advert.details.Category;
+
 public class Advert {
 
     private int id;
@@ -39,6 +43,12 @@ public class Advert {
         this.feature = feature;
         this.tva = tva;
         this.vendor = vendor;
+    }
+
+    public static void main(String[] args) throws JsonProcessingException {
+        Category category = Category.ADVENTURE;
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(category));
     }
 
     public int getId() {

@@ -17,5 +17,11 @@ public class AssertUtils {
         Assert.assertEquals(response.getStatus(), HttpStatus.UNAUTHORIZED.value());
     }
 
+    public static void assertIsConflicted(EdgeServerResponse response) {
+        Assert.assertEquals(response.getStatus(), HttpStatus.CONFLICT.value());
+    }
 
+    public static void assertPreconditionFailed(EdgeServerResponse response) {
+        Assert.assertEquals(response.getStatus(), HttpStatus.PRECONDITION_FAILED.value());
+    }
 }

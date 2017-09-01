@@ -12,6 +12,7 @@ import ro.motorzz.core.utils.sql.SQLQueryBuilder;
 import ro.motorzz.model.account.Account;
 import ro.motorzz.model.account.AccountStatus;
 import ro.motorzz.model.account.AccountType;
+import ro.motorzz.repository.base.BaseRepository;
 import ro.motorzz.repository.rowmapper.AccountRowMapper;
 
 import java.util.List;
@@ -82,6 +83,18 @@ public class AccountRepository extends BaseRepository {
                 .update("accounts")
                 .set()
                 .equal("status", "?", accountStatus.name())
+                .where()
+                .equal("id", "?", id);
+        SQLQuery query = queryBuilder.build();
+        jdbcTemplate.update(query.getQuery(), query.getParams());
+        return this.findAccount(id);
+    }
+
+    public Account updatePassword(int id, String password) {
+        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
+                .update("accounts")
+                .set()
+                .equal("password", "?", password)
                 .where()
                 .equal("id", "?", id);
         SQLQuery query = queryBuilder.build();

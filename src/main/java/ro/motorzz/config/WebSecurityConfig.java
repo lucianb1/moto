@@ -102,7 +102,7 @@ public class WebSecurityConfig {
 
         @Override
         public void configure(WebSecurity web) throws Exception {
-            web.ignoring().antMatchers("/forgot-password", "/login", "/registration/**", "/swagger/**", "/v2/api-docs", "/error", "/images/**",
+            web.ignoring().antMatchers("/reset-password", "/reset-password/confirm", "/login", "/registration/**", "/swagger/**", "/v2/api-docs", "/error", "/images/**",
                     "/population", "/contact-us", "/wbsocket/**");
             web.ignoring().antMatchers(HttpMethod.OPTIONS);
         }

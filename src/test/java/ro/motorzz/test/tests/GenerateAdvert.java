@@ -14,10 +14,12 @@ public class GenerateAdvert extends BaseTestClass {
     @Autowired
     private GeneratorService generatorService;
 
+
     @Test
     public void insertRandomAdvert(){
         long millis = System.currentTimeMillis();
         generatorService.insertRandomDataInAdvertTable(10000);
         LOGGER.info("DURATION:     " + (System.currentTimeMillis() - millis));
     }
+
 }

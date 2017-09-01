@@ -43,6 +43,23 @@ public class MailServiceImpl implements MailService {
             configureMessage(message, emailTo, "Confirm account", htmlContent);
             mailSender.send(mimeMessage);
         } catch (Exception e) {
+            LOG.error("Exception occurred while trying to send register confirmation email", e);
+        }
+    }
+
+    @Override
+    public void sendPasswordConfirmationEmail(String emailTo, String token) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
+        Context context = new Context();
+        context.setVariable("token", token);
+        context.setVariable("baseUrl", baseUrl);
+        String htmlContent = templateEngine.process(NEW_PASSWORD_HTML, context);
+        try {
+            LOG.info("Sending register confirmation email to " + emailTo);
+            configureMessage(message, emailTo, "Reset password", htmlContent);
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
             LOG.error("Exception occurred while trying to send password change confirmation email", e);
         }
     }

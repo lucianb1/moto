@@ -60,6 +60,12 @@ public class ExceptionController {
         return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.PRECONDITION_FAILED);
     }
 
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<String> handleConflictException(Exception ex) {
+        LOGGER.error("Conflict exception ", ex);
+        return new ResponseEntity<>(toJson(ex.getMessage()), HttpStatus.CONFLICT);
+    }
+
     private String toJson(String message) {
         return jsonUtils.toJson(message);
     }

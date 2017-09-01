@@ -46,19 +46,11 @@ public class GeneratorServiceImpl implements GeneratorService {
         advert.setTva(true);
         advert.setVendor(randomElementFromCollection(Arrays.asList(Vendor.values())).getId());
         return advert;
-
     }
 
     private int generateRandomNumber(int minValue, int maxValue) {
         Random rand = new Random();
         return rand.nextInt(maxValue - minValue) + minValue;
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            int randomCategoryID = randomElementFromCollection(Arrays.asList(Category.values())).getId();
-            System.out.println(randomCategoryID);
-        }
     }
 
     public static <T> T randomElementFromCollection(List<T> collection) {

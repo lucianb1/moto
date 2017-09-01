@@ -8,6 +8,4 @@ public interface RegistrationService {
     void register(RegistrationRequest request);
 
     LoginResponseJson confirmRegistration(String token);
-
-    void resendRegistrationToken(String email);
 }

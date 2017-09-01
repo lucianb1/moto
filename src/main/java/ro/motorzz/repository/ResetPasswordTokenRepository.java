@@ -8,29 +8,31 @@ import org.springframework.stereotype.Repository;
 import ro.motorzz.core.exception.NotFoundException;
 import ro.motorzz.core.utils.sql.SQLQuery;
 import ro.motorzz.core.utils.sql.SQLQueryBuilder;
-import ro.motorzz.model.token.registration.RegistrationToken;
+import ro.motorzz.model.token.resetpassword.ResetPasswordToken;
 import ro.motorzz.repository.base.BaseRepository;
-import ro.motorzz.repository.rowmapper.RegistrationTokenRowMapper;
+import ro.motorzz.repository.rowmapper.ResetPasswordRowMapper;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public class RegistrationTokenRepository extends BaseRepository {
+public class ResetPasswordTokenRepository extends BaseRepository {
 
-    private static final RegistrationTokenRowMapper registrationTokenRowMapper = new RegistrationTokenRowMapper();
+    private static final ResetPasswordRowMapper registrationTokenRowMapper = new ResetPasswordRowMapper();
 
-    public RegistrationToken saveRegistrationToken(String token, LocalDateTime expiresOn, int accountID) {
+    public ResetPasswordToken saveResetPasswordToken(String token, LocalDateTime expiresOn,String password, int accountID) {
         SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
-                .insertInto("registration_tokens")
-                .columns("token", "expires_on", "account_id")
+                .insertInto("reset_password_tokens")
+                .columns("token", "expires_on", "password", "account_id")
                 .values()
                 .append(":token", token)
                 .append(":expires_on", expiresOn)
+                .append(":password", password)
                 .append(":account_id", accountID);
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("token", token)
                 .addValue("expires_on", expiresOn)
+                .addValue("password", password)
                 .addValue("account_id", accountID);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedJdbcTemplate.update(queryBuilder.build().getQuery(), params, keyHolder);
@@ -38,44 +40,42 @@ public class RegistrationTokenRepository extends BaseRepository {
 
     }
 
-    public RegistrationToken findByToken(String token) {
-        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
-                .select().columns("token", "expires_on", "account_id")
-                .from("registration_tokens")
-                .where().equal("token", "?", token);
-        SQLQuery query = queryBuilder.build();
-        try {
-            return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), registrationTokenRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("RegistrationToken by token not found: " + token);
-        }
-    }
-
-    public RegistrationToken findByAccountId(int accountID) {
-        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
-                .select().columns("token", "expires_on", "account_id")
-                .from("registration_tokens")
-                .where().equal("account_id", "?", accountID);
-        SQLQuery query = queryBuilder.build();
-        try {
-            return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), registrationTokenRowMapper);
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("RegistrationToken by accountID not found: " + accountID);
-        }
-    }
-
     public boolean isTokenUnique(String token) {
         SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
-                .select().columns("token").from("registration_tokens")
+                .select().columns("token").from("reset_password_tokens")
                 .where().equal("token", "?", token);
         SQLQuery query = queryBuilder.build();
         List<String> tokens = jdbcTemplate.queryForList(query.getQuery(), query.getParams(), String.class);
         return tokens.isEmpty();
     }
 
-    public void deleteRegistrationToken(String token) {
+    public ResetPasswordToken findByToken(String token) {
         SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
-                .delete("registration_tokens")
+                .select().append("*").from("reset_password_tokens")
+                .where().equal("token", "?", token);
+        SQLQuery query = queryBuilder.build();
+        try {
+            return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), registrationTokenRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("ResetPasswordToken by token not found: " + token);
+        }
+    }
+
+    public ResetPasswordToken findResetPasswordToken(int id) {
+        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
+                .select().append("*").from("reset_password_tokens")
+                .where().equal("id", "?", id);
+        SQLQuery query = queryBuilder.build();
+        try {
+            return jdbcTemplate.queryForObject(query.getQuery(), query.getParams(), registrationTokenRowMapper);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException("ResetPasswordToken by id not found: " + id);
+        }
+    }
+
+    public void deleteResetPasswordToken(String token) {
+        SQLQueryBuilder queryBuilder = new SQLQueryBuilder()
+                .delete("reset_password_tokens")
                 .where()
                 .equal("token", "?", token);
         SQLQuery query = queryBuilder.build();

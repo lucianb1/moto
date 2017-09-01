@@ -16,6 +16,8 @@ import ro.motorzz.test.client.RegistrationControllerClient;
 import ro.motorzz.test.config.BaseTestClass;
 import ro.motorzz.test.edgeserver.EdgeServerResponse;
 import ro.motorzz.test.mock.MailServiceMock;
+import ro.motorzz.test.utils.AccountUtils;
+import ro.motorzz.test.utils.AssertUtils;
 
 @Component
 public class RegistrationTest extends BaseTestClass {
@@ -31,6 +33,9 @@ public class RegistrationTest extends BaseTestClass {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private AccountUtils accountUtils;
+
     @Test
     public void registrationTest(String email, String password) {
         RegistrationJsonRequest request = new RegistrationJsonRequest()
@@ -40,16 +45,40 @@ public class RegistrationTest extends BaseTestClass {
     }
 
     @Test(dataProvider = "email-and-password-data-provider")
-    public LoginResponseJson registrationAndConfirmTest(String email, String password) {
+    public void registrationAndConfirmTest(String email, String password) {
         long millis = System.currentTimeMillis();
-        this.registrationTest(email, password);
+        accountUtils.registration(email, password);
+
         String token = mailServiceMock.getRegisterTokenForEmail(email);
         final EdgeServerResponse<LoginResponseJson> edgeServerResponse = registrationControllerClient.confirmRegistration(token);
         Account account = accountRepository.findAccountByEmail(email);
         Assert.assertEquals(account.getEmail(), edgeServerResponse.getContent().getEmail());
         Assert.assertEquals(account.getStatus(), AccountStatus.ACTIVE);
         LOGGER.info("DURATION:     " + (System.currentTimeMillis() - millis));
-        return edgeServerResponse.getContent();
+    }
+
+    @Test
+    public void multipleConsecutiveRegistration() {
+        String email = randomEmail();
+        String password = randomString(10);
+        accountUtils.registration(email, password);
+        RegistrationJsonRequest request = new RegistrationJsonRequest()
+                .setEmail(email)
+                .setPassword(password);
+        EdgeServerResponse<Void> voidEdgeServerResponse = registrationControllerClient.registerRaw(request);
+        AssertUtils.assertIsConflicted(voidEdgeServerResponse);
+    }
+
+    @Test
+    public void registrationAfterConfirm() {
+        String email = randomEmail();
+        String password = randomString(10);
+        accountUtils.registrationAndConfirm(email, password);
+        RegistrationJsonRequest request = new RegistrationJsonRequest()
+                .setEmail(email)
+                .setPassword(password);
+        EdgeServerResponse<Void> voidEdgeServerResponse = registrationControllerClient.registerRaw(request);
+        AssertUtils.assertPreconditionFailed(voidEdgeServerResponse);
     }
 
     @DataProvider(name = "email-and-password-data-provider")
