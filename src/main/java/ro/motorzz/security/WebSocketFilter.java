@@ -38,7 +38,7 @@ public class WebSocketFilter extends GenericFilterBean {
         LOGGER.info("DO FILTER Web Socket    = " + httpServletRequest.getQueryString());
         try {
             TokenAuthentication authentication = new TokenAuthentication();
-            authentication.setToken("xxx");
+            authentication.setToken("authentication token");
             authentication.setAuthenticated(true);
             Authentication auth = this.authenticationProvider.authenticate(authentication);
             SecurityContextHolder.getContext().setAuthentication(auth);

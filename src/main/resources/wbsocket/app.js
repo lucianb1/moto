@@ -10,35 +10,39 @@ function setConnected(connected) {
 	$("#greetings").html("");
 }
 
+var i = 0;
 function connect() {
-	//connect to stomp where stomp endpoint is exposed
-	var socket = new SockJS("/motorzz/greeting?tokenValue=XXXXX");
-	ws = Stomp.over(socket);
+        //connect to stomp where stomp endpoint is exposed
+        var socket = new SockJS("/motorzz/greeting?tokenValue=XXXXX");
+        ws = Stomp.over(socket);
 
-	ws.connect({}, function(frame) {
-        setConnected(true);
-		ws.subscribe("/user/queue/errors", function(message) {
-			alert("Error " + message.body);
-		});
+        ws.connect({}, function (frame) {
+            setConnected(true);
+            ws.subscribe("/user/queue/errors", function (message) {
+                alert("Error " + message.body);
+            });
 
-		ws.subscribe("/user/queue/reply", function(message) {
-			showGreeting(message.body);
-		});
-	}, function(error) {
-        setConnected(false);
-		alert("STOMP error " + error);
-	});
+            ws.subscribe("/user/queue/reply", function (message) {
+
+                showGreeting(message.body);
+            });
+        }, function (error) {
+            setConnected(false);
+            alert("STOMP error " + error);
+        });
 }
 
 function disconnect() {
 	if (ws != null) {
-		ws.close();
+		ws.disconnect();
 	}
 	setConnected(false);
 	console.log("Disconnected");
 }
 
 function sendName() {
+	console.log('i value: ',i);
+	i = 0;
 	var data = JSON.stringify({
 		'name' : $("#name").val()
 	})
@@ -46,6 +50,7 @@ function sendName() {
 }
 
 function showGreeting(message) {
+	i++;
 	$("#greetings").append("<tr><td> " + message + "</td></tr>");
 }
 

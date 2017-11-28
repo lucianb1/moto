@@ -25,4 +25,13 @@ public class StaticResourceConfig extends WebMvcConfigurerAdapter {
 //        registry.addResourceHandler("/images/users/**").addResourceLocations("file:" + rootFolder + usersRoot + "/");
 
     }
+
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/motorzz/**")
+//                .allowedOrigins("http://localhost:9000")
+//                .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS")
+//                .allowedHeaders("Content-Type", "X-Requested-With", "X-Custom-Header", "Authorization")
+//                .allowCredentials(false).maxAge(3600);
+//    }
 }
